@@ -1,0 +1,25 @@
+#include "\a3\ui_f\hpp\definedikcodes.inc"
+#include "script_component.hpp"
+
+class CfgPatches {
+    class ADDON {
+        name = COMPONENT_NAME;
+        units[] = {};
+        weapons[] = {};
+        requiredVersion = REQUIRED_VERSION;
+        requiredAddons[] = {"cba_main"};
+        author = "";
+        authors[] = {""};
+        VERSION_CONFIG;
+    };
+};
+
+#include "CfgAmmo.hpp"
+#include "CfgDefaultKeysPresets.hpp"
+#include "CfgEventHandlers.hpp"
+#include "CfgMagazines.hpp"
+#include "CfgUserActions.hpp"
+#include "CfgVehicles.hpp"
+#include "CfgWeapons.hpp"
+#include "UserActionGroups.hpp"
+#include "UserActionsConflictGroups.hpp"

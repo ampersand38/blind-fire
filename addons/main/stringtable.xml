@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="BLF">
+    <Package name="Main">
+        <Key ID="STR_BLF_Main_BlindFire">
+            <English>Blind Fire</English>
+        </Key>
+        <Key ID="STR_BLF_Main_BlindFireToggle">
+            <English>Blind Fire (Toggle)</English>
+        </Key>
+        <Key ID="STR_BLF_Main_BlindFireToggle_Tip">
+            <English>Toggles holding the current weapon for blind firing.</English>
+        </Key>
+    </Package>
+</Project>
