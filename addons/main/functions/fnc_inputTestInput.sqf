@@ -1,3 +1,4 @@
+#include "script_component.hpp"
 /*
  * Author: Ampersand
  * Handles input Blind Fire (Toggle)
@@ -9,7 +10,7 @@
  * NONE
  *
  * Example:
- * true call blf_main_fnc_inputToggleBlindFire
+ * true call blf_main_fnc_inputBlindFireToggle
  */
 
 private _input = if (_this isEqualType false) then {
@@ -19,3 +20,5 @@ private _input = if (_this isEqualType false) then {
         _this > 0
     };
 };
+
+systemChat format ["%1 %2", diag_frameno, _this];

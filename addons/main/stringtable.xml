@@ -10,5 +10,11 @@
         <Key ID="STR_BLF_Main_BlindFireToggle_Tip">
             <English>Toggles holding the current weapon for blind firing.</English>
         </Key>
+        <Key ID="STR_BLF_Main_Sensitivity">
+            <English>Aim Sensitivity</English>
+        </Key>
+        <Key ID="STR_BLF_Main_Sensitivity_Tip">
+            <English>Aim sensitivity when blind-firing.</English>
+        </Key>
     </Package>
 </Project>

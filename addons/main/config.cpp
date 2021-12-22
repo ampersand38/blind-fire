@@ -22,4 +22,4 @@ class CfgPatches {
 #include "CfgVehicles.hpp"
 #include "CfgWeapons.hpp"
 #include "UserActionGroups.hpp"
-#include "UserActionsConflictGroups.hpp"
+//#include "UserActionsConflictGroups.hpp"

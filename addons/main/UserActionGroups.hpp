@@ -5,7 +5,12 @@ class UserActionGroups
 		name = CSTRING(BlindFire); // Display name of your category.
 		isAddon = 1;
 		group[] = { // List of all actions inside this category.
-            QGVAR(ToggleBlindFire)
+            QGVAR(AimUp),
+            QGVAR(AimDown),
+            QGVAR(AimLeft),
+            QGVAR(AimRight),
+            QGVAR(BlindFireToggle),
+            QGVAR(TestInput)
         };
 	};
 };

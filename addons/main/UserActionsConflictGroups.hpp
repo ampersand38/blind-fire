@@ -1,8 +1,6 @@
 class UserActionsConflictGroups {
     class ActionGroups {
-        GVAR(BlindFire)[] = {
-            QGVAR(ToggleBlindFire)
-        };
+
     };
 
     class CollisionGroups {
