@@ -3,10 +3,7 @@
 ADDON = false;
 
 #include "XEH_PREP.hpp"
-#include "initSettings.sqf";
-
-GVAR(dummy) = objNull;
-GVAR(eventHandlers) = [];
-GVAR(vectorDirAndUp) = [[0, 1, 0], [0, 0, 1]];
+#include "initVars.hpp";
+GVAR(direction) = 0;
 
 ADDON = true;

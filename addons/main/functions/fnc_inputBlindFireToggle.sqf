@@ -13,26 +13,17 @@
  * true call blf_main_fnc_inputBlindFireToggle
  */
 
-private _fnc_exit = {
-    deleteVehicle GVAR(dummy);
-    {
-        _unit removeEventHandler _x;
-    } forEach GVAR(eventHandlers);
-    GVAR(eventHandlers) = [];
-    GVAR(proxy) = "";
-    GVAR(vectorDirAndUp) = [[0, 1, 0], [0, 0, 1]];
-};
+if (!isNull GVAR(dummy)) exitWith {deleteVehicle GVAR(dummy)};
 
-if (!isNull GVAR(dummy)) exitWith _fnc_exit;
+GVAR(unit) = call CBA_fnc_currentUnit;
+if (!isNull objectParent GVAR(unit)) exitWith {deleteVehicle GVAR(dummy)};
 
-private _unit = call CBA_fnc_currentUnit;
-if (!isNull objectParent _unit) exitWith _fnc_exit;
-
-private _weapon = currentWeapon _unit;
-private _cfg = configFile >> "CfgWeapons" >> _weapon;
+private _cfg = configFile >> "CfgWeapons" >> currentWeapon GVAR(unit);
 private _weaponType = getNumber (_cfg >> "type"); // Rifle: 1, Pistol: 2, Launcher: 4
 GVAR(loadoutIndex) = [1, 4, 2] find _weaponType; // loadout order
-if (GVAR(loadoutIndex) < 0) exitWith _fnc_exit;
+if (GVAR(loadoutIndex) < 0) exitWith {deleteVehicle GVAR(dummy)};
+private _unitLoadout = getUnitLoadout GVAR(unit);
+GVAR(muzzle) = currentMuzzle GVAR(unit);
 
 GVAR(proxy) = [
     "proxy:\a3\characters_f\proxies\weapon.001",
@@ -42,63 +33,58 @@ GVAR(proxy) = [
 
 // Prep dummy
 private _move = format ["AmovPercMstpSrasW%1Dnon", ["rfl", "lnr", "pst"] select GVAR(loadoutIndex)];
-GVAR(dummy) = createAgent ["B_Soldier_VR_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+GVAR(dummy) = createAgent [QGVAR(dummy), [0, 0, 0], [], 0, "CAN_COLLIDE"];
+//GVAR(dummy) = createAgent ["B_Soldier_VR_F", [0, 0, 0], [], 0, "CAN_COLLIDE"];
+if (isNull GVAR(dummy)) exitWith {
+    systemChat "could not create dummy";
+};
 GVAR(dummy) disableAI "ALL";
 private _loadout = getUnitLoadout GVAR(dummy);
-private _weapon = getUnitLoadout _unit select GVAR(loadoutIndex);
-_loadout set [GVAR(loadoutIndex), _weapon];
+_loadout set [GVAR(loadoutIndex), _unitLoadout select GVAR(loadoutIndex)];
 GVAR(dummy) setUnitLoadout _loadout;
 GVAR(dummy) switchmove _move;
+GVAR(dummy) addEventHandler ["Deleted", {
+	params ["_dummy"];
+    private _loadout = getUnitLoadout _dummy;
+    private _unitLoadout = getUnitLoadout GVAR(unit);
+    _unitLoadout set [GVAR(loadoutIndex), _loadout select GVAR(loadoutIndex)];
+    GVAR(unit) setUnitLoadout _unitLoadout;
+    {
+        call CBA_fnc_currentUnit removeEventHandler _x;
+    } forEach GVAR(eventHandlers);
+    #include "..\initVars.hpp"
+}];
 
-_direction = 2;
-private _offset = [
-    // Rifle
-    [-0.25, -1.2, -0.5],
-    [0.21, -0.5, -1.34],
-    [-0.5, -0.2, -1.34],
-    // Launcher
-    [-1.0, -0.8, 0.1],
-    [-1.6, -0.1, -0.1],
-    [-1.6, 0.2, 0.2],
-    // Handgun
-    [-1.1, -0.65, 0.85],
-    [-0.2, -1.4, 0.7],
-    [-0.73, -1.4, -0.17]
-] select (GVAR(loadoutIndex) * 3 + _direction);
-
-GVAR(vectorDirAndUp) = [
-    // Rifle
-    [[0, 1, -1], [0, 1, 1]],
-    [[-1, 1, 0], [1, 1, 0]],
-    [[1, 1, 0], [0, 0, 1]],
-    // Launcher
-    [[-1, 1, 0], [1, 1, 0]],
-    [[0, 1, 1], [1, 0, 0]],
-    [[0, 1, -1], [1, 0, 0]],
-    // Handgun
-    [[1, -1, -1], [1, 1, -1]],
-    [[0, 0, -1], [0, 1, 0]],
-    [[1, 0, 0], [0, 1, 0]]
-] select (GVAR(loadoutIndex) * 3 + _direction);
-
-//GVAR(dummy) attachTo [_unit, [0,0,0], GVAR(proxy), true];
-GVAR(dummy) attachTo [_unit, _offset, GVAR(proxy), true];
-GVAR(dummy) setVectorDirAndUp GVAR(vectorDirAndUp);
+[] call FUNC(attachDummy);
 
 // Prep player unit
-GVAR(eventHandlers) pushBack ["Fired", _unit addEventHandler ["Fired", {
-	params ["_unit", "_weapon", "_muzzle", "_fireMode", "_ammo", "_magazine", "_projectile", "_gunner"];
-	//params ["", "", "_muzzle", "_fireMode"];
-    GVAR(dummy) forceWeaponFire [_muzzle, _fireMode];
-    private _weaponPos = _unit modelToWorldVisualWorld (_unit selectionPosition ["weapon", "Memory"]);
-    private _projectilePos = (((getPosASL _projectile)));
-    private _offset = (_projectilePos vectorDiff _weaponPos);
-    private _weaponDir = _unit weaponDirection _weapon;
-    diag_log (_offset vectorDiff _weaponDir);
-    diag_log (_projectilePos distance _weaponPos);
+_unitLoadout set [GVAR(loadoutIndex), [
+    [QGVAR(FakeRifle),"","","",[QGVAR(1000Rnd_Mag), _unitLoadout # 0 # 4 # 1],[],""],
+    ["launch_MRAWS_sand_F","","","",["MRAWS_HEAT_F",1],[],""],
+    ["hgun_P07_F","","","",["16Rnd_9x21_Mag",16],[],""]
+] select GVAR(loadoutIndex)];
+GVAR(unit) setUnitLoadout _unitLoadout;
+GVAR(eventHandlers) pushBack ["Fired", GVAR(unit) addEventHandler ["Fired", {
+	//params ["_unit", "_weapon", "_muzzle", "_fireMode", "_ammo", "_magazine", "_projectile", "_gunner"];
+	params ["", "", "", "_fireMode", "", "", "_projectile"];
+    //systemChat str _this;
+    GVAR(dummy) forceWeaponFire [GVAR(muzzle), _fireMode];
     deleteVehicle _projectile;
+    if (GVAR(unit) ammo currentMuzzle GVAR(unit) == 0) then { deleteVehicle GVAR(dummy); };
 }]];
-/*
+GVAR(eventHandlers) pushBack ["AnimStateChanged", GVAR(unit) addEventHandler ["AnimStateChanged", {
+	params ["_unit", "_anim"];
+    if (
+        currentWeapon GVAR(unit) != QGVAR(FakeRifle)
+    ) then {
+        deleteVehicle GVAR(dummy)
+    };
+}]];
 
+
+
+{
+  _x addCuratorEditableObjects [[GVAR(dummy)], true];
+} forEach allCurators;
 BIS_tracedShooter = nil;
 [GVAR(dummy), 10] call BIS_fnc_traceBullets;
