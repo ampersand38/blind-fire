@@ -105,5 +105,6 @@ class CfgWeapons {
     		recoil = "recoil_single_nlaw";
             sounds[] = {};
     	};
+        class GunParticles {};
     };
 };

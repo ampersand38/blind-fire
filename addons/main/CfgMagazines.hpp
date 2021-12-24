@@ -24,8 +24,9 @@ class CfgMagazines {
     	model = "";
     	modelSpecial = "";
         initSpeed = 0;
-    	displaynameshort = "AT";
-    	ammo = QGVAR(FakeAmmo);
+    	displaynameshort = "";
+        ammo = "R_PG7_F";
+    	//ammo = QGVAR(FakeAmmo);
     	type = "2*		256";
     };
 

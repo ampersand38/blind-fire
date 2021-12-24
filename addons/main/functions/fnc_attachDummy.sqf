@@ -95,3 +95,9 @@ GVAR(vectorDirAndUp) = [
 //GVAR(dummy) attachTo [_unit, [0,0,0], GVAR(proxy), true];
 GVAR(dummy) attachTo [GVAR(unit), _offset, GVAR(proxy), true];
 GVAR(dummy) setVectorDirAndUp GVAR(vectorDirAndUp);
+/*
+if (isNil QGVAR(axesHelper)) then {
+    GVAR(axesHelper) = "Land_Laptop_unfolded_F" createVehicle [0,0,0];
+};
+GVAR(axesHelper) attachTo [GVAR(unit), [0,0,0], GVAR(proxy), true];
+*/

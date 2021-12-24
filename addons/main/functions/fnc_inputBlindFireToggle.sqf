@@ -13,20 +13,17 @@
  * true call blf_main_fnc_inputBlindFireToggle
  */
 
-if (!isNull GVAR(dummy)) exitWith {
-    GVAR(dummy) action ["GunLightOff", GVAR(dummy)];
-    GVAR(dummy) action ["IRLaserOff", GVAR(dummy)];
-    deleteVehicle GVAR(dummy)
-};
+if (!isNull GVAR(dummy)) exitWith { call FUNC(stop) };
 
 GVAR(unit) = call CBA_fnc_currentUnit;
-if (!isNull objectParent GVAR(unit)) exitWith {deleteVehicle GVAR(dummy)};
+if (!isNull objectParent GVAR(unit)) exitWith { call FUNC(stop) };
 
 private _weapon = currentWeapon GVAR(unit);
+GVAR(endWeapon) = _weapon;
 private _cfg = configFile >> "CfgWeapons" >> _weapon;
 private _weaponType = getNumber (_cfg >> "type"); // Rifle: 1, Pistol: 2, Launcher: 4
 GVAR(loadoutIndex) = [1, 4, 2] find _weaponType; // loadout order
-if (GVAR(loadoutIndex) < 0) exitWith {deleteVehicle GVAR(dummy)};
+if (GVAR(loadoutIndex) < 0) exitWith { call FUNC(stop) };
 private _unitLoadout = getUnitLoadout GVAR(unit);
 GVAR(muzzle) = currentMuzzle GVAR(unit);
 private _ammoCount = GVAR(unit) ammo GVAR(muzzle);
@@ -35,12 +32,12 @@ GVAR(isFlashlightOn) = GVAR(unit) isFlashlightOn _weapon;
 GVAR(isIRLaserOn) = GVAR(unit) isIRLaserOn _weapon;
 
 GVAR(proxy) = [
-    //"proxy:\a3\characters_f\proxies\weapon.001",
-    "weapon",
-    //"proxy:\a3\characters_f\proxies\launcher.001",
-    "launcher",
-    //"proxy:\a3\characters_f\proxies\pistol.001"
-    "RightHand"
+    "proxy:\a3\characters_f\proxies\weapon.001",
+    //"weapon",
+    "proxy:\a3\characters_f\proxies\launcher.001",
+    //"launcher",
+    "proxy:\a3\characters_f\proxies\pistol.001"
+    //"RightHand"
 ] select GVAR(loadoutIndex);
 
 // Prep dummy
@@ -69,28 +66,7 @@ if (GVAR(isFlashlightOn)) then {
 if (GVAR(isIRLaserOn)) then {
     GVAR(dummy) action ["IRLaserOn", GVAR(dummy)];
 };
-GVAR(dummy) addEventHandler ["Deleted", {
-	params ["_dummy"];
-    private _loadout = getUnitLoadout _dummy;
-    private _unitLoadout = getUnitLoadout GVAR(unit);
-    _unitLoadout set [GVAR(loadoutIndex), _loadout select GVAR(loadoutIndex)];
-    private _currentVisionMode = currentVisionMode GVAR(unit);
-    GVAR(unit) setUnitLoadout _unitLoadout;
-    GVAR(unit) selectWeapon (_unitLoadout select GVAR(loadoutIndex) select 0);
-    if (_currentVisionMode > 0) then {
-        GVAR(unit) action ["nvGoggles", GVAR(unit)];
-    };
-    {
-        call CBA_fnc_currentUnit removeEventHandler _x;
-    } forEach GVAR(eventHandlers);
-    if (GVAR(isFlashlightOn)) then {
-        GVAR(unit) action ["GunLightOn", GVAR(unit)];
-    };
-    if (GVAR(isIRLaserOn)) then {
-        GVAR(unit) action ["IRLaserOn", GVAR(unit)];
-    };
-    #include "..\initVars.hpp"
-}];
+GVAR(dummy) addEventHandler ["Deleted", { call FUNC(stop) }];
 [{
     [{
         (!GVAR(isFlashlightOn) && !GVAR(isIRLaserOn)) ||
@@ -102,12 +78,30 @@ GVAR(dummy) addEventHandler ["Deleted", {
 }, nil, 0.5] call CBA_fnc_waitAndExecute;
 
 // Prep player unit
-_unitLoadout set [GVAR(loadoutIndex), [
-    [QGVAR(FakeRifle),"","","",[[], [QGVAR(1000Rnd_Mag), _unitLoadout select 0 select 4 select 1]] select _ammoCount,[],""],
-    [QGVAR(FakeLauncher),"","","",[[],[GVAR(Rocket_Mag),_unitLoadout select 1 select 4 select 1]] select _ammoCount,[],""],
-    [QGVAR(FakePistol),"","","",[[],[QGVAR(1000Rnd_Mag),_unitLoadout select 2 select 4 select 1]] select _ammoCount,[],""]
-] select GVAR(loadoutIndex)];
-GVAR(FakeWeapon) = _unitLoadout select GVAR(loadoutIndex) select 0;
+GVAR(FakeWeapon) = [
+    QGVAR(FakeRifle),
+    QGVAR(FakeLauncher),
+    QGVAR(FakePistol)
+] select GVAR(loadoutIndex);
+private _fakeLoadout = _unitLoadout select GVAR(loadoutIndex);
+    //[GVAR(FakeWeapon),"","","",[[], [QGVAR(1000Rnd_Mag), _unitLoadout select 0 select 4 select 1]] select (_ammoCount > 0),[],""],
+    //[QGVAR(FakeLauncher),"","","",[[],[GVAR(Rocket_Mag),_unitLoadout select 1 select 4 select 1]] select (_ammoCount > 0),[],""],
+    //[QGVAR(FakePistol),"","","",[[],[QGVAR(1000Rnd_Mag),_unitLoadout select 2 select 4 select 1]] select (_ammoCount > 0),[],""]
+_fakeLoadout set [0, GVAR(FakeWeapon)];
+_fakeLoadout set [1, ""];
+_fakeLoadout set [2, ""];
+_fakeLoadout set [3, ""];
+if ((_fakeLoadout select 4) isNotEqualTo []) then {
+    (_fakeLoadout select 4) set [0,
+        [
+            QGVAR(1000Rnd_Mag),
+            QGVAR(Rocket_Mag),
+            QGVAR(1000Rnd_Mag)
+        ] select GVAR(loadoutIndex)
+    ];
+};
+
+_unitLoadout set [GVAR(loadoutIndex), _fakeLoadout];
 GVAR(unit) setUnitLoadout _unitLoadout;
 GVAR(unit) selectWeapon GVAR(FakeWeapon);
 if (_currentVisionMode > 0) then {
@@ -123,10 +117,12 @@ GVAR(eventHandlers) pushBack ["Fired", GVAR(unit) addEventHandler ["Fired", {
 }]];
 GVAR(eventHandlers) pushBack ["AnimStateChanged", GVAR(unit) addEventHandler ["AnimStateChanged", {
 	params ["_unit", "_anim"];
+    private _currWeapon = currentWeapon GVAR(unit);
     if (
         currentWeapon GVAR(unit) != GVAR(FakeWeapon)
     ) then {
-        deleteVehicle GVAR(dummy)
+        GVAR(endWeapon) = _currWeapon;
+        call FUNC(stop);
     };
 }]];
 
