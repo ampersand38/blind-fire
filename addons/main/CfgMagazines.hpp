@@ -16,12 +16,13 @@ class CfgMagazines {
 		magazineGroup[]	= {QGVAR(magazineGroup)}; /// all magazines in the same group may be used in weapon that has the group defined as compatible
 	};
 
-    class CA_LauncherMagazine;
-    class GVAR(Rocket_Mag): CA_LauncherMagazine {
+    class RPG7_F;
+    class GVAR(Rocket_Mag): RPG7_F {
     	author = "Ampersand";
     	scope = 1;
     	displayName = "Blind Fire";
     	model = "";
+    	modelSpecial = "";
         initSpeed = 0;
     	displaynameshort = "AT";
     	ammo = QGVAR(FakeAmmo);

@@ -10,16 +10,16 @@ class CfgWeapons {
         author = "Ampersand";
         scope = 2;
         showToPlayer = 0;
-		displayName = "Blind Fire"; /// some name
-        descriptionShort = "Invisible weapon to hold while blind-firing."; /// displayed on mouseOver in Inventory
-		model = QPATHTOF(data\rifle.p3d); /// path to model
+		displayName = "Blind Fire";
+        descriptionShort = "Invisible weapon to hold while blind-firing.";
+		model = QPATHTOF(data\rifle.p3d);
 
-		picture = "\a3\ui_f\data\GUI\Cfg\Hints\WeaponResting_ca.paa"; /// different accessories have M, S, T instead of X
-		UiPicture = "\A3\Weapons_F\Data\UI\icon_regular_CA.paa"; /// weapon with grenade launcher should be marked such way
-		weaponInfoType = "RscWeaponEmpty"; /// display with zeroing is good for iron sights
+		picture = "\a3\ui_f\data\GUI\Cfg\Hints\WeaponResting_ca.paa";
+		UiPicture = "\A3\Weapons_F\Data\UI\icon_regular_CA.paa";
+		weaponInfoType = "RscWeaponEmpty";
 
 		muzzles[] = {this}; /// to be able to switch between bullet muzzle and TGL
-		magazines[] = {GVAR(1000Rnd_Mag)}; /// original custom made magazines and a group of several standardized mags
+		magazines[] = {GVAR(1000Rnd_Mag)};
 		reloadAction = ""; /// MX hand animation actually fits this rifle well
 		/// positive value defines speed of the muzzle independent on the magazine setting, negative value is a coefficient of magazine initSpeed
 		initSpeed = -1; /// this means that initSpeed of magazine is used
@@ -61,16 +61,16 @@ class CfgWeapons {
         _generalMacro = QGVAR(FakePistol);
         scope = 2;
         showToPlayer = 0;
-		displayName = "Blind Fire"; /// some name
-        descriptionShort = "Invisible weapon to hold while blind-firing."; /// displayed on mouseOver in Inventory
-		model = QPATHTOF(data\rifle.p3d); /// path to model
+		displayName = "Blind Fire";
+        descriptionShort = "Invisible weapon to hold while blind-firing.";
+		model = QPATHTOF(data\rifle.p3d);
 
-		picture = "\a3\ui_f\data\GUI\Cfg\Hints\WeaponResting_ca.paa"; /// different accessories have M, S, T instead of X
-		UiPicture = "\A3\Weapons_F\Data\UI\icon_regular_CA.paa"; /// weapon with grenade launcher should be marked such way
-		weaponInfoType = "RscWeaponEmpty"; /// display with zeroing is good for iron sights
+		picture = "\a3\ui_f\data\GUI\Cfg\Hints\WeaponResting_ca.paa";
+		UiPicture = "\A3\Weapons_F\Data\UI\icon_regular_CA.paa";
+		weaponInfoType = "RscWeaponEmpty";
 
 		muzzles[] = {this}; /// to be able to switch between bullet muzzle and TGL
-		magazines[] = {GVAR(1000Rnd_Mag)}; /// original custom made magazines and a group of several standardized mags
+		magazines[] = {GVAR(1000Rnd_Mag)};
 		reloadAction = ""; /// MX hand animation actually fits this rifle well
 		/// positive value defines speed of the muzzle independent on the magazine setting, negative value is a coefficient of magazine initSpeed
 		initSpeed = -1; /// this means that initSpeed of magazine is used
@@ -87,38 +87,23 @@ class CfgWeapons {
         maxZeroing = 50;
     };
 
-    class Launcher_Base_F;
-	class GVAR(FakeLauncher): Launcher_Base_F
-	{
+    class launch_RPG7_F;
+    class GVAR(FakeLauncher): launch_RPG7_F {
         author = "Ampersand";
         scope = 2;
         showToPlayer = 0;
-		displayName = "Blind Fire"; /// some name
-        descriptionShort = "Invisible weapon to hold while blind-firing."; /// displayed on mouseOver in Inventory
-		model = QPATHTOF(data\launcher.p3d); /// path to model
-
-		picture = "\a3\ui_f\data\GUI\Cfg\Hints\WeaponResting_ca.paa"; /// different accessories have M, S, T instead of X
-		UiPicture = "\A3\Weapons_F\Data\UI\icon_at_CA.paa"; /// weapon with grenade launcher should be marked such way
-		weaponInfoType = "RscWeaponEmpty"; /// display with zeroing is good for iron sights
-
-		muzzles[] = {this}; /// to be able to switch between bullet muzzle and TGL
-        magazines[] = {GVAR(Rocket_Mag)}; /// original custom made magazines and a group of several standardized mags
-        reloadAction = ""; /// MX hand animation actually fits this rifle well
-
-        handAnim[] = {"OFP2_ManSkeleton", "\A3\Weapons_F_Exp\Launchers\RPG7\Data\Anim\RPG7V.rtm"};
-    	recoil = "recoil_rpg";
-    	maxZeroing = 50;
-    	inertia = 0.8;
-    	aimTransitionSpeed = 0.5;
-    	dexterity = 1.2;
-
-    	modes[] = {"Single"};
+        displayName = "Blind Fire";
+        descriptionShort = "Invisible weapon to hold while blind-firing.";
+        hiddenSelectionsTextures[] = {""};
+        magazines[] = {"RPG7_F", QGVAR(Rocket_Mag)};
+		picture = "\a3\ui_f\data\GUI\Cfg\Hints\WeaponResting_ca.paa";
+		UiPicture = "\A3\Weapons_F\Data\UI\icon_at_CA.paa";
+		weaponInfoType = "RscWeaponEmpty";
+        handAnim[] = {"OFP2_ManSkeleton", "\A3\Weapons_F\Launchers\NLAW\Data\Anim\NLAW.rtm"};
     	class Single: Mode_SemiAuto
     	{
-    		recoil = "recoil_single_law";
+    		recoil = "recoil_single_nlaw";
             sounds[] = {};
     	};
-    	drySound[] = {"A3\Sounds_F\arsenal\weapons\Launchers\RPG32\Dry_RPG32", 0.446684, 1, 20};
-	};
-
+    };
 };

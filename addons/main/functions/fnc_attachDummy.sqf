@@ -28,18 +28,18 @@ if (_index < 0 || {_index > (COUNT_POSITIONS * COUNT_WEAPONS - 1)}) exitWith {};
 
 private _offset = [
     // Rifle
-    [0,0,0], // Left
-    [0,0.12,0.22], // Forward
-    [0,0.12,0.02], // Down
-    [0,0,0], // Right
+    [0.5,0.6,-0.22], // Left
+    [0.5,0.72,-0.0], // Forward
+    [0.5,0.72,-0.2], // Down
+    [0.5,0.72,-0.22], // Right
     // Launcher
-    [0,0.4,0], // Left
+    [0.2,0.2,0], // Left
     [0.3,0.1,0], // Forward
-    [0,0.4,0], // Down
-    [0,0.4,0], // Right
+    [0.2,0.2,0], // Down
+    [0.2,0.2,0.1], // Right
     // Handgun
     [-0.02,0.02,-0.05], // Left
-    [0.05,0,0.02], // Forward
+    [0.02,0.3,0.02], // Forward
     [0.05,0,0.02], // Down
     [0.02,0.02,0.06] // Right
 ] select _index;

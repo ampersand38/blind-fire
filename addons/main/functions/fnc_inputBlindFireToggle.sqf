@@ -35,9 +35,12 @@ GVAR(isFlashlightOn) = GVAR(unit) isFlashlightOn _weapon;
 GVAR(isIRLaserOn) = GVAR(unit) isIRLaserOn _weapon;
 
 GVAR(proxy) = [
-    "proxy:\a3\characters_f\proxies\weapon.001",
-    "proxy:\a3\characters_f\proxies\launcher.001",
-    "proxy:\a3\characters_f\proxies\pistol.001"
+    //"proxy:\a3\characters_f\proxies\weapon.001",
+    "weapon",
+    //"proxy:\a3\characters_f\proxies\launcher.001",
+    "launcher",
+    //"proxy:\a3\characters_f\proxies\pistol.001"
+    "RightHand"
 ] select GVAR(loadoutIndex);
 
 // Prep dummy
@@ -100,9 +103,9 @@ GVAR(dummy) addEventHandler ["Deleted", {
 
 // Prep player unit
 _unitLoadout set [GVAR(loadoutIndex), [
-    [QGVAR(FakeRifle),"","","",[QGVAR(1000Rnd_Mag), _unitLoadout select 0 select 4 select 1],[],""],
-    [QGVAR(FakeLauncher),"","","",[QGVAR(Rocket_Mag),_unitLoadout select 1 select 4 select 1],[],""],
-    [QGVAR(FakePistol),"","","",[QGVAR(1000Rnd_Mag),_unitLoadout select 2 select 4 select 1],[],""]
+    [QGVAR(FakeRifle),"","","",[[], [QGVAR(1000Rnd_Mag), _unitLoadout select 0 select 4 select 1]] select _ammoCount,[],""],
+    [QGVAR(FakeLauncher),"","","",[[],[GVAR(Rocket_Mag),_unitLoadout select 1 select 4 select 1]] select _ammoCount,[],""],
+    [QGVAR(FakePistol),"","","",[[],[QGVAR(1000Rnd_Mag),_unitLoadout select 2 select 4 select 1]] select _ammoCount,[],""]
 ] select GVAR(loadoutIndex)];
 GVAR(FakeWeapon) = _unitLoadout select GVAR(loadoutIndex) select 0;
 GVAR(unit) setUnitLoadout _unitLoadout;
@@ -114,10 +117,9 @@ if (_currentVisionMode > 0) then {
 GVAR(eventHandlers) pushBack ["Fired", GVAR(unit) addEventHandler ["Fired", {
 	//params ["_unit", "_weapon", "_muzzle", "_fireMode", "_ammo", "_magazine", "_projectile", "_gunner"];
 	params ["", "", "", "_fireMode", "", "", "_projectile"];
-    //systemChat str _this;
     GVAR(dummy) forceWeaponFire [GVAR(muzzle), _fireMode];
     deleteVehicle _projectile;
-    if (GVAR(unit) ammo currentMuzzle GVAR(unit) == 0) then { deleteVehicle GVAR(dummy); };
+    //if (GVAR(unit) ammo currentMuzzle GVAR(unit) == 0) then { deleteVehicle GVAR(dummy); };
 }]];
 GVAR(eventHandlers) pushBack ["AnimStateChanged", GVAR(unit) addEventHandler ["AnimStateChanged", {
 	params ["_unit", "_anim"];
