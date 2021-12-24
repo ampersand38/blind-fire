@@ -1,15 +1,13 @@
-class CfgMagazines
-{
+class CfgMagazines {
 	class Default;
-
 	class CA_Magazine;
 
-	class GVAR(1000Rnd_Mag): CA_Magazine
-	{
+	class GVAR(1000Rnd_Mag): CA_Magazine {
+    	author = "Ampersand";
 		scope = 1; /// or 2, to be precise
 		displayName = "Blind Fire";
 		picture = "\A3\Weapons_F\Data\placeholder_co.paa"; /// just some icon
-		ammo = FakeAmmo;
+		ammo = QGVAR(FakeAmmo);
 		count = 1000; /// 30 rounds is enough
 		initSpeed = 0; /// standard muzzle speed
 		tracersEvery = 0; /// disable tracers by default
@@ -17,4 +15,17 @@ class CfgMagazines
 		descriptionShort = ""; /// on mouse-over in Inventory
 		magazineGroup[]	= {QGVAR(magazineGroup)}; /// all magazines in the same group may be used in weapon that has the group defined as compatible
 	};
+
+    class CA_LauncherMagazine;
+    class GVAR(Rocket_Mag): CA_LauncherMagazine {
+    	author = "Ampersand";
+    	scope = 1;
+    	displayName = "Blind Fire";
+    	model = "";
+        initSpeed = 0;
+    	displaynameshort = "AT";
+    	ammo = QGVAR(FakeAmmo);
+    	type = "2*		256";
+    };
+
 };

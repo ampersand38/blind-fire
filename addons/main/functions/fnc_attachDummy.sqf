@@ -14,43 +14,52 @@
  * [1] call blf_main_fnc_attachDummy
  */
 
+#define COUNT_POSITIONS 4
+#define COUNT_WEAPONS 3
+
 params [["_direction", 0]];
 
 if (isNull GVAR(dummy)) exitWith {};
 
-GVAR(direction) = 0 max (GVAR(direction) + _direction) min 2;
+GVAR(direction) = 0 max (GVAR(direction) + _direction) min (COUNT_POSITIONS - 1);
 
-private _index = GVAR(loadoutIndex) * 3 + GVAR(direction);
-if (_index < 0 || {_index > 8}) exitWith {};
+private _index = GVAR(loadoutIndex) * COUNT_POSITIONS + GVAR(direction);
+if (_index < 0 || {_index > (COUNT_POSITIONS * COUNT_WEAPONS - 1)}) exitWith {};
+
 private _offset = [
     // Rifle
-    [0,0,0],
-    [0,0.12,0.02],
-    [0,0,0],
+    [0,0,0], // Left
+    [0,0.12,0.22], // Forward
+    [0,0.12,0.02], // Down
+    [0,0,0], // Right
     // Launcher
-    [0,0.4,0],
-    [0,0.4,0],
-    [0,0.4,0],
+    [0,0.4,0], // Left
+    [0.3,0.1,0], // Forward
+    [0,0.4,0], // Down
+    [0,0.4,0], // Right
     // Handgun
-    [-0.02,0.02,-0.05],
-    [0.05,0,0.02],
-    [0.02,0.02,0.06]
+    [-0.02,0.02,-0.05], // Left
+    [0.05,0,0.02], // Forward
+    [0.05,0,0.02], // Down
+    [0.02,0.02,0.06] // Right
 ] select _index;
 
 GVAR(vectorDirAndUp) = [
     // Rifle
-    [[-1, 1, 0], [0, 0, 1]],
-    [[0, 1, -1], [0, 1, 1]],
-    [[1, 1, 0], [0, 0, 1]],
+    [[-1, 1, 0], [0, 0, 1]], // Left
+    [[0, 1, 0], [0, 0, 1]], // Forward
+    [[0, 1, -1], [0, 1, 1]], // Down
+    [[1, 1, 0], [0, 0, 1]], // Right
     // Launcher
-    [[0, 1, 1], [0, 0, 1]],
-    [[-1, 1, 0], [0, 0, 1]],
+    [[0, 1, 1], [0, 0, 1]], // Left
+    [[0, 1, 0], [0, 0, 1]], // Forward
+    [[-1, 1, 0], [0, 0, 1]], // Down
     [[0, 1, -1], [0, 0, 1]],
     // Handgun
-    [[0, 1, 0], [1, 1, 1]],
+    [[0, 1, 0], [1, 1, 1]], // Left
+    [[0, 1, 0], [0, 1, 1]], // Forward
     [[1, 3, -1], [0, 1, 1]], // Down
-    //[[0, 1, 0], [0, 1, 1]], // Forward
-    [[0, 1, 0], [-1, 1, 1]]
+    [[0, 1, 0], [-1, 1, 1]] // Right
 ] select _index;
 /*
 private _offset = [

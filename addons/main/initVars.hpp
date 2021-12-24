@@ -1,6 +1,6 @@
-GVAR(direction) = -1;
 GVAR(dummy) = objNull;
 GVAR(eventHandlers) = [];
+GVAR(FakeWeapon) = "";
 GVAR(loadoutIndex) = -1;
 GVAR(muzzle) = "";
 GVAR(proxy) = "";
