@@ -13,6 +13,8 @@
  * true call blf_main_fnc_stop
  */
 
+if (isNull GVAR(dummy)) exitWith {};
+
 // Turn off dummy light/laser
 if (GVAR(isFlashlightOn)) then { GVAR(dummy) action ["GunLightOff", GVAR(dummy)]; };
 if (GVAR(isIRLaserOn)) then { GVAR(dummy) action ["IRLaserOff", GVAR(dummy)]; };
