@@ -14,7 +14,7 @@ key_name = "{{prefix}}_{{version}}"
 authority = "{{prefix}}_{{version}}-{{git \"id 8\"}}"
 
 releasebuild = [
-    "@zip blf_{{semver.major}}.{{semver.minor}}.{{semver.patch}}"
+    "@zip blind-fire_{{semver.major}}.{{semver.minor}}.{{semver.patch}}"
 ]
 
 [header_exts]

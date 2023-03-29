@@ -1,7 +1,7 @@
 name = "Blind Fire";
 picture = "logo_amp_ca.paa";
 actionName = "GitHub";
-action = "https://github.com/ampersand38/blf-slew-cockpit-control";
+action = "https://github.com/ampersand38/blind-fire";
 description = "Shoot over and around cover.";
 logo = "logo_amp_ca.paa";
 logoOver = "logo_amp_ca.paa";
