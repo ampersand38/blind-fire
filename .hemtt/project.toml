@@ -1,0 +1,17 @@
+name = "Blind Fire"
+prefix = "blf"
+mainprefix = "z"
+
+[properties]
+author = "Ampersand"
+url = "https://github.com/ampersand38/blind-fire"
+
+[files]
+exclude = [
+    ".vscode",
+    "models",
+    "*.sqfc"
+]
+
+[asc]
+enabled = true

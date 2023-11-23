@@ -6,7 +6,7 @@ files = [
     "README.md",
     "AUTHORS.txt",
     "LICENSE",
-    "logo_amp_ca.paa",
+    "logo_ca.paa",
     "meta.cpp"
 ]
 

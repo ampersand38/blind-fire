@@ -1,0 +1,7 @@
+compile C:/Users/amper/AppData/Local/Temp/hemtt/Documents_GitHub_blind-fire/asc/output/z/blf/addons/main/XEH_postInit.sqfc
+compile C:/Users/amper/AppData/Local/Temp/hemtt/Documents_GitHub_blind-fire/asc/output/z/blf/addons/main/functions/fnc_attachDummy.sqfc
+compile C:/Users/amper/AppData/Local/Temp/hemtt/Documents_GitHub_blind-fire/asc/output/z/blf/addons/main/XEH_preStart.sqfc
+compile C:/Users/amper/AppData/Local/Temp/hemtt/Documents_GitHub_blind-fire/asc/output/z/blf/addons/main/XEH_preInit.sqfc
+compile C:/Users/amper/AppData/Local/Temp/hemtt/Documents_GitHub_blind-fire/asc/output/z/blf/addons/main/functions/fnc_stop.sqfc
+compile C:/Users/amper/AppData/Local/Temp/hemtt/Documents_GitHub_blind-fire/asc/output/z/blf/addons/main/functions/fnc_inputStop.sqfc
+compile C:/Users/amper/AppData/Local/Temp/hemtt/Documents_GitHub_blind-fire/asc/output/z/blf/addons/main/functions/fnc_inputBlindFireToggle.sqfc

@@ -18,8 +18,8 @@ class CfgWeapons {
 		UiPicture = "\A3\Weapons_F\Data\UI\icon_regular_CA.paa";
 		weaponInfoType = "RscWeaponEmpty";
 
-		muzzles[] = {this}; /// to be able to switch between bullet muzzle and TGL
-		magazines[] = {GVAR(1000Rnd_Mag)};
+		muzzles[] = {"this"}; /// to be able to switch between bullet muzzle and TGL
+		magazines[] = {QGVAR(1000Rnd_Mag)};
 		reloadAction = ""; /// MX hand animation actually fits this rifle well
 		/// positive value defines speed of the muzzle independent on the magazine setting, negative value is a coefficient of magazine initSpeed
 		initSpeed = -1; /// this means that initSpeed of magazine is used
@@ -29,11 +29,11 @@ class CfgWeapons {
 
         //caseless ammo//
 		caseless[] = {"",1,1,1};  /// no sound of ejected brass
-		soundBullet[] = {caseless,1};
+		soundBullet[] = {"caseless",1};
 
 		selectionFireAnim = ""; /// are we able to get rid of all the zaslehs?
 
-		modes[] = {Single, FullAuto}; /// Includes fire modes for AI
+		modes[] = {"Single", "FullAuto"}; /// Includes fire modes for AI
 
     ////////////////////////////////////////////////////// NO OPTICS ///////////////////////////////////////////////////////////
 
@@ -69,8 +69,8 @@ class CfgWeapons {
 		UiPicture = "\A3\Weapons_F\Data\UI\icon_regular_CA.paa";
 		weaponInfoType = "RscWeaponEmpty";
 
-		muzzles[] = {this}; /// to be able to switch between bullet muzzle and TGL
-		magazines[] = {GVAR(1000Rnd_Mag)};
+		muzzles[] = {"this"}; /// to be able to switch between bullet muzzle and TGL
+		magazines[] = {QGVAR(1000Rnd_Mag)};
 		reloadAction = ""; /// MX hand animation actually fits this rifle well
 		/// positive value defines speed of the muzzle independent on the magazine setting, negative value is a coefficient of magazine initSpeed
 		initSpeed = -1; /// this means that initSpeed of magazine is used
